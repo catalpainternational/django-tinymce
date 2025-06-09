@@ -146,3 +146,8 @@ class TestWidgets(SimpleTestCase):
         ):
             html = widget.render("foobar", "lorem ipsum", attrs={"id": "id_foobar"})
             self.assertIn("Awesome style", html)
+
+    def test_mce_attrs_media_url_resolver(self):
+        widget = TinyMCE(mce_attrs={"media_url_resolver": "(data) return {'html': ''}"})
+        config = widget.get_mce_config(attrs={"id": "id"})
+        self.assertEqual(config["media_url_resolver"], "(data) return {'html': ''}")
