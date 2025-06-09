@@ -1,3 +1,32 @@
+This fork
+=========
+
+TinyMCE license was changed from MIT in 6.x to dual license (commercial and GPL) in 7.x.
+As such the upgrades done by jazzband to the original repository of django-tinymce are
+scarcely usable for most commercial projects.
+
+This repository forks the original one including fixes for Django 5.2 support and newer
+version of Python but replaces TinyMCE with the latest 6.8.6 version released.
+
+There won't be any more releases of TinyMCE 6.x but for sake of completeness the
+upgrade process was:
+
+1. download latest version (6.8.6 at https://download.tiny.cloud/tinymce/community/tinymce_6.8.6.zip)
+2. replace the `tinymce/static/tinymce` directory with the contents of the zip file
+3. download language packs from https://download.tiny.cloud/tinymce/community/languagepacks/6/langs.zip , unzip the file into `tinymce/static/tinymce/langs`
+4. run terser on all JS files to remove sourceMappingURL and comments:
+```
+cd tinymce/static/tinymce
+for file in `fdfind .js`; do terser "$file" -o "${file%.js}.js" --comments false --source-map "includeSources=false"; done
+```
+
+This DOES remove the version comment from both TinyMCE and its plugins, however what version it's being uses
+should be clear from the `pyproject.toml` file since it mentions `branch =  tinymce_6.8.6`).
+According to Snyk, this version doesn't have any direct vulnerabilities (...for now):
+
+https://security.snyk.io/package/npm/tinymce
+
+
 django-tinymce
 ==============
 
