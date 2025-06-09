@@ -175,6 +175,18 @@ Image lists work exactly the same way, just use the TinyMCE
 ``external_image_list_url`` configuration option and call
 ``tinymce.views.render_to_image_list`` from your view.
 
+Using TinyMCE function callbacks
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Since all data passed from Django to the frontend are serialized using JSON, all function callbacks are specially
+managed by the init_tinymce.js script. This means that if you supply a function it will be ``eval()``-uated at
+runtime. As an alternative you can pass the name of a function you defined in your JS that will be accessed
+using `window.yourfunctionname`.
+If you're using a callback not included in init_tinymce.js_ it will not work... please add the function name to the
+list of fns and submit a PR.
+
+.. init_tinymce: https://github.com/jazzband/django-tinymce/blob/ceceeb60a039db4b537546500b158596a412d2fe/tinymce/static/django_tinymce/init_tinymce.js#L10
+
 The ``flatpages_link_list`` view
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
